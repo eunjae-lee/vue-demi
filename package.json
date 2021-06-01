@@ -1,7 +1,7 @@
 {
-  "name": "vue-demi",
+  "name": "@eunjae-lee/vue-demi",
   "version": "0.9.1",
-  "repository": "https://github.com/antfu/vue-demi.git",
+  "repository": "https://github.com/eunjae-lee/vue-demi.git",
   "funding": "https://github.com/sponsors/antfu",
   "license": "MIT",
   "author": "Anthony Fu <anthonyfu117@hotmail.com>",
@@ -31,12 +31,6 @@
     "release": "npx bumpp --tag --commit --push && npm publish"
   },
   "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-beta.1",
     "vue": "^2.6.0 || >=3.0.0-rc.1"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
   }
 }
