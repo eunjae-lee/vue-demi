@@ -15,5 +15,4 @@ export {
   isVue2,
   isVue3,
   version,
-  install,
 }

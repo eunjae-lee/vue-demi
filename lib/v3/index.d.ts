@@ -17,5 +17,4 @@ export {
   Vue2,
   isVue2,
   isVue3,
-  install,
 }
