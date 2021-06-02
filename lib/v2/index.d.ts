@@ -9,10 +9,6 @@ declare const version: string
  */
 declare const V: Vue
 
-/**VCA-EXPORTS**/
-export * from '@vue/composition-api'
-/**VCA-EXPORTS**/
-
 export {
   V as Vue,
   Vue2,
@@ -20,3 +16,7 @@ export {
   isVue3,
   version,
 }
+
+/**VCA-EXPORTS**/
+export * from '@vue/composition-api'
+/**VCA-EXPORTS**/

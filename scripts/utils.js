@@ -26,29 +26,21 @@ function updateVue2API() {
 
   const exports = Object.keys(VCA).filter(i => !ignoreList.includes(i))
 
-  const esmPath = path.join(dir, 'index.esm.js')
-  let content = fs.readFileSync(esmPath, 'utf-8')
+  const update = (filename, content) => {
+    const filePath = path.join(dir, filename)
+    let fileContent = fs.readFileSync(filePath, 'utf-8')
 
-  content = content.replace(
-    /\/\*\*VCA-EXPORTS\*\*\/[\s\S]+\/\*\*VCA-EXPORTS\*\*\//m,
-`/**VCA-EXPORTS**/
-export { ${exports.map(e => `${e}: undefined`).join(', ')} };'
-/**VCA-EXPORTS**/`
+    fileContent = fileContent.replace(
+      /\/\*\*VCA-EXPORTS\*\*\/[\s\S]+\/\*\*VCA-EXPORTS\*\*\//m,
+      `/**VCA-EXPORTS**/\n${content}\n/**VCA-EXPORTS**/`
     )
 
-  fs.writeFileSync(esmPath, content, 'utf-8')
-  
-  const typePath = path.join(dir, 'index.d.ts')
-  let typeContent = fs.readFileSync(typePath, 'utf-8')
+    fs.writeFileSync(filePath, fileContent, 'utf-8')
+  }
 
-  typeContent = typeContent.replace(
-    /\/\*\*VCA-EXPORTS\*\*\/[\s\S]+\/\*\*VCA-EXPORTS\*\*\//m,
-`/**VCA-EXPORTS**/
-${exports.map(e => `export const ${e}: undefined;`).join('\n')}
-/**VCA-EXPORTS**/`
-    )
-
-  fs.writeFileSync(typePath, typeContent, 'utf-8')
+  update('index.esm.js', exports.map(e => `export const ${e} = undefined;`).join('\n'))
+  update('index.d.ts', exports.map(e => `export const ${e}: undefined;`).join('\n'))
+  update('index.cjs.js', exports.map(e => `exports.${e} = undefined;`).join('\n'))
 }
 
 function switchVersion(version, vue) {
