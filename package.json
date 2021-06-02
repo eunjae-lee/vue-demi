@@ -30,13 +30,7 @@
     "postinstall": "node ./scripts/postinstall.js",
     "release": "npx bumpp --tag --commit --push && npm publish"
   },
-  "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-beta.1",
-    "vue": "^2.6.0 || >=3.0.0-rc.1"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
+  "devDependencies": {
+    "@vue/composition-api": "^1.0.0-beta.1"
   }
 }

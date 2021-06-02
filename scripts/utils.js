@@ -23,10 +23,6 @@ function copy(name, version, vue) {
 function updateVue2API() {
   const ignoreList = ['version', 'default']
   const VCA = loadModule('@vue/composition-api')
-  if (!VCA) {
-    console.warn('[vue-demi] Composition API plugin is not found. Please run "npm install @vue/composition-api" to install.')
-    return
-  }
 
   const exports = Object.keys(VCA).filter(i => !ignoreList.includes(i))
 
@@ -36,12 +32,23 @@ function updateVue2API() {
   content = content.replace(
     /\/\*\*VCA-EXPORTS\*\*\/[\s\S]+\/\*\*VCA-EXPORTS\*\*\//m,
 `/**VCA-EXPORTS**/
-export { ${exports.join(', ')} } from '@vue/composition-api'
+export { ${exports.map(e => `${e}: undefined`).join(', ')} };'
 /**VCA-EXPORTS**/`
     )
 
   fs.writeFileSync(esmPath, content, 'utf-8')
   
+  const typePath = path.join(dir, 'index.d.ts')
+  let typeContent = fs.readFileSync(typePath, 'utf-8')
+
+  typeContent = typeContent.replace(
+    /\/\*\*VCA-EXPORTS\*\*\/[\s\S]+\/\*\*VCA-EXPORTS\*\*\//m,
+`/**VCA-EXPORTS**/
+${exports.map(e => `export const ${e}: undefined;`).join('\n')}
+/**VCA-EXPORTS**/`
+    )
+
+  fs.writeFileSync(typePath, typeContent, 'utf-8')
 }
 
 function switchVersion(version, vue) {
